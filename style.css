@@ -1,7 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to right, #02000b, #17314a, #02000b );
 }
 
 header img {
@@ -18,12 +25,12 @@ nav {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-evenly;
-  background-color: #222;
+  background: linear-gradient(to right, #02000b, #17314a, #02000b );
   padding: 15px;
 }
 
 nav button {
-  background-color: #ff3d00;
+  background-color: #c20000;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -60,8 +67,10 @@ section {
 .personaje {
   background-color: #333;
   color: white;
-  padding: 15px;
-  border-radius: 8px;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   width: 250px;
   text-align: center;
   transition: transform 0.3s ease-in-out;
@@ -94,4 +103,20 @@ section {
 
 .personaje ul li {
   font-size: 14px;
+}
+
+.personaje.heroe {
+  background-color: #1ca800;
+}
+
+.personaje.villano {
+  background-color: #c20000;
+}
+
+.personaje.arma {
+  background-color: #cca300;
+}
+
+.personaje.lugar {
+  background-color: #0066b9;
 }
