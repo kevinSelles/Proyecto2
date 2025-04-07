@@ -96,7 +96,7 @@ section {
 }
 
 .personaje ul {
-  padding: 0 0 0 20px;
+  padding: 0 0 0 15px;
   margin-bottom: 10px;
   text-align: left;
 }
@@ -119,4 +119,37 @@ section {
 
 .personaje.lugar {
   background-color: #0066b9;
+}
+
+.personaje p {
+  margin-bottom: 10px;
+}
+
+.titulo-poderes {
+  text-align: left;
+  font-weight: bold;
+}
+
+.descripcion-personaje {
+  display: none;
+}
+
+.modal-seguir-leyendo {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-seguir-leyendo.active {
+  display: block;
 }

@@ -210,6 +210,7 @@ personajesMarvel.forEach(personaje => {
 
   const poderesLista = document.createElement('p');
   poderesLista.textContent = 'Poderes:';
+  poderesLista.classList.add('titulo-poderes');
   const poderes = document.createElement('ul');
   info.appendChild(poderesLista)
 
@@ -220,13 +221,42 @@ personajesMarvel.forEach(personaje => {
   })
   info.appendChild(poderes);
 
+  const seguirLeyendo = document.createElement('button');
+  seguirLeyendo.textContent = 'Seguir Leyendo';
+  seguirLeyendo.classList.add('seguir-leyendo');
+  info.appendChild(seguirLeyendo);
+
+   seguirLeyendo.addEventListener('click', () => {
+    modalSeguirLeyendo.classList.add('active');
+  });
+
   const descripcion = document.createElement('p');
+  descripcion.classList.add('descripcion-personaje');
   descripcion.textContent = personaje.descripcion;
   info.appendChild(descripcion);
-  
+
   section.appendChild(img);
   section.appendChild(info);
-
   main.appendChild(section);
+
+  
 })
 
+const modalSeguirLeyendo = document.createElement('div');
+modalSeguirLeyendo.id = 'modal-seguir-leyendo';
+modalSeguirLeyendo.classList.add('modal-seguir-leyendo');
+
+const closeButton = document.createElement('span');
+closeButton.classList.add('close');
+closeButton.textContent = 'x';
+modalSeguirLeyendo.appendChild(closeButton);
+
+closeButton.addEventListener('click', () => {
+  modalSeguirLeyendo.classList.remove('active');
+})
+
+const descripcionDiv = document.createElement('div');
+descripcionDiv.classList('descripcion');
+modalSeguirLeyendo.appendChild(descripcionDiv);
+
+document.body.appendChild(modalSeguirLeyendo);
