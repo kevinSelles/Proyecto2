@@ -51,7 +51,7 @@ const personajesMarvel = [
     tipo: 'lugar',
     nombre: 'Wakanda',
     alterEgo: 'N/A',
-    poderes: ['Tecnología avanzada', 'Vibranium'],
+    poderes: ['Tecnología avanzada', 'Vibranium', 'Camuflaje para ocultarse'],
     imagen: './assets/wakanda.webp',
     descripcion: 'Es el país con la tecnología más avanzada del planeta. Cerrato al resto del mundo por un escudo reflector, es el unico país que produce vibranium, un metal extremadamente duro y valioso. Su protector es Black Panther.'
   },
@@ -99,7 +99,7 @@ const personajesMarvel = [
     tipo: 'arma',
     nombre: 'Rayo de Zeus',
     alterEgo: 'N/A',
-    poderes: ['Poder del rayo'],
+    poderes: ['Poder del rayo', 'Alcanza grandes velocidades', 'Efecto boomerang'],
     imagen: './assets/rayo-zeus.webp',
     descripcion: 'Junto a la Lanza de Odin, es considerada el arma más poderosa de los dioses. Controla los rayos y puede ser lanzadas a velocidades incalculables, atravesando todo a su paso'
   },
@@ -173,9 +173,10 @@ document.body.insertBefore(nav, document.querySelector('main'));
 const navButtons = [
   {id: 'botonFiltrar' , texto: 'Filtrar'},
   {id: 'botonHeroe' , texto: 'heroe'},
-  {id: 'botonvillano' , texto: 'villano'},
-  {id: 'botonlugar' , texto: 'lugar'},
-  {id: 'botonarma' , texto: 'arma'}
+  {id: 'botonVillano' , texto: 'villano'},
+  {id: 'botonLugar' , texto: 'lugar'},
+  {id: 'botonArma' , texto: 'arma'},
+  {id: 'botonTodos' , texto: 'todos'}
 ];
 
 
@@ -186,6 +187,28 @@ navButtons.forEach(({id , texto}) => {
   boton.textContent = texto;
   nav.appendChild(boton);
 });
+
+const filtrarPersonajes = (tipo) => {
+  const personajes = document.querySelectorAll('.personaje');
+
+  personajes.forEach(personaje => {
+    if (tipo === 'todos') {
+      personaje.style.display = 'block';
+    } else {
+      if (personaje.classList.contains(tipo)) {
+        personaje.style.display = 'block';
+      } else {
+        personaje.style.display = 'none';
+      }
+    }
+  });
+};
+
+document.getElementById('botonHeroe').addEventListener('click', () => filtrarPersonajes('heroe'));
+document.getElementById('botonVillano').addEventListener('click', () => filtrarPersonajes('villano'));
+document.getElementById('botonLugar').addEventListener('click', () => filtrarPersonajes('lugar'));
+document.getElementById('botonArma').addEventListener('click', () => filtrarPersonajes('arma'));
+document.getElementById('botonTodos').addEventListener('click', () => filtrarPersonajes('todos'));
 
 personajesMarvel.forEach(personaje => {
   const section = document.createElement('section');
@@ -211,8 +234,10 @@ personajesMarvel.forEach(personaje => {
   const poderesLista = document.createElement('p');
   poderesLista.textContent = 'Poderes:';
   poderesLista.classList.add('titulo-poderes');
+
   const poderes = document.createElement('ul');
-  info.appendChild(poderesLista)
+  poderes.classList.add('lista-poderes');
+  info.appendChild(poderesLista);
 
   personaje.poderes.forEach(poder => {
     const li = document.createElement('li');
@@ -227,6 +252,17 @@ personajesMarvel.forEach(personaje => {
   info.appendChild(seguirLeyendo);
 
    seguirLeyendo.addEventListener('click', () => {
+    const sectionClonada = section.cloneNode(true);
+    sectionClonada.classList.add('section-clonada');
+
+    const button = sectionClonada.querySelector('.seguir-leyendo');
+    if (button) {
+      button.remove();
+    };
+
+    descripcionDiv.innerHTML = '';
+    descripcionDiv.appendChild(sectionClonada);
+
     modalSeguirLeyendo.classList.add('active');
   });
 
@@ -256,7 +292,8 @@ closeButton.addEventListener('click', () => {
 })
 
 const descripcionDiv = document.createElement('div');
-descripcionDiv.classList('descripcion');
+descripcionDiv.classList.add('descripcion');
 modalSeguirLeyendo.appendChild(descripcionDiv);
 
 document.body.appendChild(modalSeguirLeyendo);
+
