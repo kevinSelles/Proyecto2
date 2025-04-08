@@ -179,8 +179,6 @@ const navButtons = [
   {id: 'botonTodos' , texto: 'todos'}
 ];
 
-
-
 navButtons.forEach(({id , texto}) => {
   const boton = document.createElement('button');
   boton.id = id;
@@ -275,8 +273,7 @@ personajesMarvel.forEach(personaje => {
   section.appendChild(info);
   main.appendChild(section);
 
-  
-})
+});
 
 const modalSeguirLeyendo = document.createElement('div');
 modalSeguirLeyendo.id = 'modal-seguir-leyendo';
@@ -297,3 +294,63 @@ modalSeguirLeyendo.appendChild(descripcionDiv);
 
 document.body.appendChild(modalSeguirLeyendo);
 
+const filtrar = document.getElementById('botonFiltrar');
+
+filtrar.addEventListener('click', () => {
+
+  if (document.querySelector('#ventana-filtrar')) return;
+
+  const ventanaFiltrar = document.createElement('div');
+  ventanaFiltrar.id = 'ventana-filtrar';
+
+  const tituloVentanaFiltrar = document.createElement('h3');
+  tituloVentanaFiltrar.textContent = 'Visualizar por categeorías';
+  ventanaFiltrar.appendChild(tituloVentanaFiltrar);
+
+  const categorias = ['Héroe', 'Antihéroe', 'Villano', 'Arma', 'Lugar'];
+  const checks = {};
+
+  categorias.forEach(categoria => {
+    
+    const label = document.createElement('label');
+    const checkBox = document.createElement('input');
+    checkBox.type = 'checkbox';
+    checkBox.value = categoria;
+
+    checks[categoria] = checkBox;
+
+    label.appendChild(checkBox);
+    label.appendChild(document.createTextNode('' + 'categoria'));
+    ventanaFiltrar.appendChild(label);
+  });
+
+  const botonBuscar = document.createElement('button');
+  botonBuscar.textContent = 'Buscar';
+  ventanaFiltrar.appendChild(botonBuscar);
+
+  botonBuscar.addEventListener('click', () => {
+
+    const categoriasSeleccionadas = [];
+    for (let categoria in checks) {
+      if (checks[categoria].checked) {
+        categoriasSeleccionadas.push(categoria);
+      }
+    }
+
+    document.querySelectorAll('.personaje').forEach(section => {
+
+      const tipo = section.getAttribute('tipo');
+
+      if (categoriasSeleccionadas.includes(tipo)) {
+        section.style.display = 'block';
+      } else {
+        section.style.display = 'none';
+      }
+    });
+  
+    ventanaFiltrar.remove()
+  });
+
+    document.body.appendChild(ventanaFiltrar);
+  }
+);
