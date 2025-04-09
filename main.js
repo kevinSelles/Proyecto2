@@ -161,8 +161,6 @@ const personajesMarvel = [
   }
 ];
 
-console.log(personajesMarvel);
-
 const main = document.createElement('main');
 main.id = 'contenedorPersonajes';
 document.body.insertBefore(main, document.querySelector('footer'));
@@ -391,7 +389,7 @@ botonCerrarFiltro.textContent = 'X';
 ventanaFiltrar.appendChild(botonCerrarFiltro);
 
 botonCerrarFiltro.addEventListener('click', () => {
-  ventanaFiltrar.style.display = 'none';
+  ventanaFiltrar.remove();
 })
 
   const tituloVentanaFiltrar = document.createElement('h3');
@@ -445,3 +443,16 @@ botonCerrarFiltro.addEventListener('click', () => {
     document.body.appendChild(ventanaFiltrar);
   }
 );
+
+const footer = document.querySelector('footer');
+
+const infoFooter = document.createElement('p');
+infoFooter.textContent = 'Simulation of a Marvel website as an academic project by student Kevin Selles';
+
+const contactoFooter = document.createElement('a');
+contactoFooter.textContent = 'Contact me';
+contactoFooter.href = 'mailto:kevin.selles.c@gmail.com';
+contactoFooter.target = '_blank';
+
+footer.appendChild(infoFooter);
+footer.appendChild(contactoFooter);

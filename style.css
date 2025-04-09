@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+:root {
+  --color-letras: whitesmoke;
+  --color-boton-rojo: #c20000;
+  --color-borde-rojo: #7c0000;
+  --color-boton-amarillo: #f4b400;
+  --color-borde-amarillo: rgb(168, 143, 0);
+  --color-background-general: linear-gradient(to right, #02000b,#0b182b, #17314a, #0b182b, #02000b);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -25,15 +34,15 @@ nav {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-evenly;
-  background: linear-gradient(to right, #02000b,#0b182b, #17314a, #0b182b, #02000b);
+  background: var(--color-background-general);
   padding: 15px;
   gap: 15px;
 }
 
 nav button {
-  background-color: #c20000;
-  color: white;
-  border: 2px solid #7c0000;
+  background-color: var(--color-boton-rojo);
+  color: var(--color-letras);
+  border: 2px solid var(--color-borde-rojo);
   padding: 10px 15px;
   font-size: 16px;
   font-weight: bold;
@@ -68,7 +77,7 @@ section {
 
 .personaje {
   background-color: #333;
-  color: white;
+  color: var(--color-letras);
   padding: 20px;
   margin: 20px;
   border-radius: 15px;
@@ -140,9 +149,9 @@ section {
   left: 50%;
   transform: translateX(-50%);
   padding: 10px 20px;
-  background-color: #f4b400;
+  background-color: var(--color-boton-amarillo);
   color: #333;
-  border: 2px solid rgb(168, 143, 0);
+  border: 2px solid var(--color-borde-amarillo);
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
@@ -160,7 +169,9 @@ section {
   transform: translate(-50%, -50%);
   width: 80%;
   max-width: 600px;
-  color: white;
+  max-height: 600px;
+  overflow-y: auto;
+  color: var(--color-letras);
   padding: 20px;
   border-radius: 10px;
   z-index: 1000;
@@ -174,7 +185,7 @@ section {
   position: absolute;
   top: 10px;
   right: 10px;
-  color: white;
+  color: var(--color-letras);
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.6);
   border: 1px solid black;
@@ -210,7 +221,7 @@ section {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(20, 20, 20, 0.95);
-  color: white;
+  color: var(--color-letras);
   border: 2px solid #ff0000;
   padding: 2rem;
   display: flex;
@@ -234,9 +245,9 @@ section {
   margin-top: 1.5rem;
   width: 100%;
   padding: 0.6rem;
-  background-color: #ff0000;
-  border: none;
-  color: white;
+  background-color: var(--color-boton-rojo);
+  border: 2px solid var(--color-borde-rojo);
+  color: var(--color-letras);
   font-weight: bold;
   font-size: 1rem;
   border-radius: 6px;
@@ -295,7 +306,7 @@ section {
 }
 
 .mensaje-no-resultados {
-color: white;
+color: var(--color-letras);
 font-size: 2rem;
 font-weight: bold;
 text-align: center;
@@ -308,10 +319,26 @@ margin-top: 20px;
   left: 50%;
   transform: translateX(-50%);
   padding: 10px 20px;
-  background-color: #f4b400;
+  background-color: var(--color-boton-amarillo);
   color: #333;
-  border: 2px solid rgb(168, 143, 0);
+  border: 2px solid var(--color-borde-amarillo);
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
+}
+
+footer {
+  width: 100%;
+  height: 100px;
+  color: var(--color-letras);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+}
+
+footer > a {
+  color: var(--color-letras);
 }
