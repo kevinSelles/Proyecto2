@@ -1,6 +1,6 @@
 const personajesMarvel = [
   {
-    tipo: 'heroe',
+    tipo: 'héroe',
     nombre: 'Spider-Man',
     alterEgo: 'Peter Parker',
     poderes: ['Super fuerza', 'Sentido arácnido', 'Trepar paredes', 'Lanzar telarañas'],
@@ -8,7 +8,7 @@ const personajesMarvel = [
     descripcion: 'Peter Parker, un joven que adquiere poderes arácnidos tras ser mordido por una araña radiactiva. Usa sus habilidades para proteger la ciudad como Spider-Man.'
   },
   {
-    tipo: 'heroe',
+    tipo: 'héroe',
     nombre: 'Iron Man',
     alterEgo: 'Tony Stark',
     poderes: ['Inteligencia avanzada', 'Traje de alta tecnología'],
@@ -21,10 +21,10 @@ const personajesMarvel = [
     alterEgo: 'Loki',
     poderes: ['Magia', 'Manipulación de la realidad', 'Cambio de forma', 'Control mental', 'Longevidad'],
     imagen: './assets/loki.webp',
-    descripcion: 'Hermano adoptivo de Thor y dios del engaño, Loki alterna entre villano y antiheroe en su búsqueda de poder y reconocimiento.'
+    descripcion: 'Hermano adoptivo de Thor y dios del engaño, Loki alterna entre villano y antihéroe en su búsqueda de poder y reconocimiento.'
   },
   {
-    tipo: 'heroe',
+    tipo: 'héroe',
     nombre: 'Capitán América',
     alterEgo: 'Steve Rogers',
     poderes: ['Fuerza sobrehumana', 'Reflejos mejorados', 'Escudo indestructible'],
@@ -64,7 +64,7 @@ const personajesMarvel = [
     descripcion:'Con su control del magnetismo, es capaz de manipular el metal a su antojo, lo que lo convierte en uno de los mutantes más poderosos. Su odio hacia los humanos, lo convierten en un villano temible.'
   },
   {
-    tipo: 'heroe',
+    tipo: 'héroe',
     nombre: 'Thor',
     alterEgo: 'Thor Odinson',
     poderes: ['Control de rayos', 'Super fuerza', 'Volar', 'Longevidad'],
@@ -88,7 +88,7 @@ const personajesMarvel = [
     descripcion: 'Inteligencia Artificial Avanzada que ademas de absorver las información de cualquier base de datos de internet y de la Gema de la Mente, tambien posee parte de los conocimientos de las mentes de Tony Stark y Bruce Banner, además de absorver a Jarvis, la IA de Stark. Considera a los humanos una plaga a erradicar y consigue fabricarse un cuerpo robotico y una legión de androides para llevar a cabo su visión'
   },
   {
-    tipo: 'heroe',
+    tipo: 'héroe',
     nombre: 'Black Panther',
     alterEgo: 'T’Challa',
     poderes: ['Reflejos mejorados', 'Fuerza sobrehumana', 'Agilidad mejorada', 'Tecnología avanzada'],
@@ -120,7 +120,7 @@ const personajesMarvel = [
     descripcion: 'Reino de los conocidos como dioses nordicos, Thor, Odin, Loki, Freya, etc. Pequeño planeta con superficie plana lleno de poderes mágicos y seres imposibles.'
   },
   {
-    tipo: 'heroe',
+    tipo: 'héroe',
     nombre: 'Ant-Man',
     alterEgo: 'Scott Lang',
     poderes: ['Cambio de tamaño', 'Control de hormigas'],
@@ -128,7 +128,7 @@ const personajesMarvel = [
      descripcion: 'Scott Lang, un ladrón reformado, hereda el traje de Ant-Man y se une a los Vengadores con su habilidad para cambiar de tamaño.'
   },
   {
-    tipo: 'heroe',
+    tipo: 'héroe',
     nombre: 'Viuda Negra',
     alterEgo: 'Natasha Romanoff',
     poderes: ['Habilidad en combate cuerpo a cuerpo', 'Sigilo', 'Uso de armas'],
@@ -172,7 +172,8 @@ document.body.insertBefore(nav, document.querySelector('main'));
 
 const navButtons = [
   {id: 'botonFiltrar' , texto: 'Filtrar'},
-  {id: 'botonHeroe' , texto: 'heroe'},
+  {id: 'botonHéroe' , texto: 'héroe'},
+  {id: 'botonAntihéroe' , texto: 'Antihéroe'},
   {id: 'botonVillano' , texto: 'villano'},
   {id: 'botonLugar' , texto: 'lugar'},
   {id: 'botonArma' , texto: 'arma'},
@@ -186,24 +187,104 @@ navButtons.forEach(({id , texto}) => {
   nav.appendChild(boton);
 });
 
+const obtenerPersonajesAleatorios = () => {
+
+  const personajesAleatorios = [];
+
+  while(personajesAleatorios.length < 3) {
+    const personajeAleatorio = personajesMarvel[Math.floor(Math.random() * personajesMarvel.length)];
+
+  if(!personajesAleatorios.includes(personajeAleatorio)) {
+    personajesAleatorios.push(personajeAleatorio);
+  }
+  }
+return personajesAleatorios;
+}
+
+let yaMostraronAleatorios = false;
+
 const filtrarPersonajes = (tipo) => {
   const personajes = document.querySelectorAll('.personaje');
+  const main = document.querySelector('main');
+  let personajesVisibles = 0;
+
+  const aleatorias = document.querySelectorAll('.personaje-aleatoria');
+  aleatorias.forEach(seccion => seccion.remove());
+
+  const noResults = document.querySelector('#no-results-message');
+  if (noResults) {
+    noResults.remove();
+  }
 
   personajes.forEach(personaje => {
     if (tipo === 'todos') {
       personaje.style.display = 'block';
+      personajesVisibles++;
     } else {
       if (personaje.classList.contains(tipo)) {
         personaje.style.display = 'block';
+        personajesVisibles++;
       } else {
         personaje.style.display = 'none';
-      }
+      } 
     }
   });
+
+  if (personajesVisibles === 0) {
+    const noResults = document.createElement('p');
+    noResults.id = 'no-results-message';
+    noResults.textContent = 'Ups! Parece que no hay resultados que coincidan con tu búsqueda, pero seguro que estos tres te parecerán interesantes...';
+    noResults.classList.add('mensaje-no-resultados');
+    main.appendChild(noResults);
+
+    const personajesAleatorios = obtenerPersonajesAleatorios();
+
+    personajesAleatorios.forEach(personaje => {
+      const sectionClonada = document.createElement('section');
+      sectionClonada.classList.add('personaje', personaje.tipo, 'personaje-aleatoria');
+
+      const img = document.createElement('img');
+      img.src = personaje.imagen;
+      img.alt = `Imagen del personaje: ${personaje.nombre}`;
+
+      const info = document.createElement('div');
+
+      const nombre = document.createElement('h3');
+      nombre.textContent = personaje.nombre;
+
+      const alterEgo = document.createElement('p');
+      alterEgo.textContent = personaje.alterEgo !== 'N/A' && personaje.alterEgo !== personaje.nombre ? personaje.alterEgo : '';
+
+      const poderes = document.createElement('ul');
+      personaje.poderes.forEach(poder => {
+        const li = document.createElement('li');
+        li.textContent = poder;
+        poderes.appendChild(li);
+      });
+
+      const mostrarCategoria = document.createElement('button');
+  mostrarCategoria.textContent = 'Mostrar categoría';
+  mostrarCategoria.classList.add('mostrar-categoria');
+  info.appendChild(mostrarCategoria);
+
+    mostrarCategoria.addEventListener('click', () => {
+      filtrarPersonajes(personaje.tipo);
+  });
+
+      sectionClonada.appendChild(img);
+      sectionClonada.appendChild(info);
+      sectionClonada.appendChild(nombre);
+      sectionClonada.appendChild(alterEgo);
+      sectionClonada.appendChild(poderes);
+
+      main.appendChild(sectionClonada);
+    });
+  }
 };
 
-document.getElementById('botonHeroe').addEventListener('click', () => filtrarPersonajes('heroe'));
+document.getElementById('botonHéroe').addEventListener('click', () => filtrarPersonajes('héroe'));
 document.getElementById('botonVillano').addEventListener('click', () => filtrarPersonajes('villano'));
+document.getElementById('botonAntihéroe').addEventListener('click', () => filtrarPersonajes('antihéroe'));
 document.getElementById('botonLugar').addEventListener('click', () => filtrarPersonajes('lugar'));
 document.getElementById('botonArma').addEventListener('click', () => filtrarPersonajes('arma'));
 document.getElementById('botonTodos').addEventListener('click', () => filtrarPersonajes('todos'));
@@ -303,8 +384,18 @@ filtrar.addEventListener('click', () => {
   const ventanaFiltrar = document.createElement('div');
   ventanaFiltrar.id = 'ventana-filtrar';
 
+  const botonCerrarFiltro = document.createElement('span');
+botonCerrarFiltro.classList = 'close';
+botonCerrarFiltro.textContent = 'X';
+
+ventanaFiltrar.appendChild(botonCerrarFiltro);
+
+botonCerrarFiltro.addEventListener('click', () => {
+  ventanaFiltrar.style.display = 'none';
+})
+
   const tituloVentanaFiltrar = document.createElement('h3');
-  tituloVentanaFiltrar.textContent = 'Visualizar por categeorías';
+  tituloVentanaFiltrar.textContent = 'Visualizar por categorías';
   ventanaFiltrar.appendChild(tituloVentanaFiltrar);
 
   const categorias = ['Héroe', 'Antihéroe', 'Villano', 'Arma', 'Lugar'];
@@ -320,7 +411,7 @@ filtrar.addEventListener('click', () => {
     checks[categoria] = checkBox;
 
     label.appendChild(checkBox);
-    label.appendChild(document.createTextNode('' + 'categoria'));
+    label.appendChild(document.createTextNode(categoria));
     ventanaFiltrar.appendChild(label);
   });
 
@@ -333,13 +424,13 @@ filtrar.addEventListener('click', () => {
     const categoriasSeleccionadas = [];
     for (let categoria in checks) {
       if (checks[categoria].checked) {
-        categoriasSeleccionadas.push(categoria);
+        categoriasSeleccionadas.push(categoria.toLowerCase());
       }
     }
 
     document.querySelectorAll('.personaje').forEach(section => {
 
-      const tipo = section.getAttribute('tipo');
+      const tipo = section.classList[1];
 
       if (categoriasSeleccionadas.includes(tipo)) {
         section.style.display = 'block';
