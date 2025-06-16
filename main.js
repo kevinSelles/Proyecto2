@@ -1,3 +1,4 @@
+
 const personajesMarvel = [
   {
     tipo: 'héroe',
@@ -161,6 +162,8 @@ const personajesMarvel = [
   }
 ];
 
+// En esta primera parte creo toda la base de lo que será la web. El contenedor principal (main) y la barra de navegación con los botones de las principales categorias.
+
 const main = document.createElement('main');
 main.id = 'contenedorPersonajes';
 document.body.insertBefore(main, document.querySelector('footer'));
@@ -185,6 +188,8 @@ navButtons.forEach(({id , texto}) => {
   nav.appendChild(boton);
 });
 
+// A continuación, una función para obtener personajes aleatorios cuando la búsqueda no da ningun resultado. Esta función la hice bastante más avanzado el proyecto pero por algún motivo que no consigo identificar, esta función y algunos fltros de busqueda más, no siempre funcionan correctamente si los coloco más abajo.
+
 const obtenerPersonajesAleatorios = () => {
 
   const personajesAleatorios = [];
@@ -201,6 +206,8 @@ return personajesAleatorios;
 
 let yaMostraronAleatorios = false;
 
+// Aquí comienzo con el filtrado de personajes para mostrarlos o no según su categoria (tipo) que pueden ser heroes, villanos, armas y lugares. La categoría de antihéroe es la que he dejado sin resultados para poder hacer uso de a función que muestra el mensaje de que no hay resultados y poder mostrar tres personajes aleatorios.
+
 const filtrarPersonajes = (tipo) => {
   const personajes = document.querySelectorAll('.personaje');
   const main = document.querySelector('main');
@@ -213,6 +220,8 @@ const filtrarPersonajes = (tipo) => {
   if (noResults) {
     noResults.remove();
   }
+
+  //Aquí hago que se muestren y se oculten personajes según el filtro.
 
   personajes.forEach(personaje => {
     if (tipo === 'todos') {
@@ -228,12 +237,16 @@ const filtrarPersonajes = (tipo) => {
     }
   });
 
+  // A continuación doy la orden de que si la cantidad de resultados de búqueda es igual a 0, se debe crear un párrafo que muestre el mensaje de que no hay resultados.
+
   if (personajesVisibles === 0) {
     const noResults = document.createElement('p');
     noResults.id = 'no-results-message';
     noResults.textContent = 'Ups! Parece que no hay resultados que coincidan con tu búsqueda, pero seguro que estos tres te parecerán interesantes...';
     noResults.classList.add('mensaje-no-resultados');
     main.appendChild(noResults);
+
+    //Y además del mensaje, llamamos a la función que muestra a los tres personajes aleatorios.
 
     const personajesAleatorios = obtenerPersonajesAleatorios();
 
@@ -260,6 +273,8 @@ const filtrarPersonajes = (tipo) => {
         poderes.appendChild(li);
       });
 
+      // En el caso de los personajes aleatorios, el botón de cada uno lo que hará es mostrar todos los personajes de su categoría, igual que si se hubiese buscado esa categoría mediante el filtro.
+
       const mostrarCategoria = document.createElement('button');
   mostrarCategoria.textContent = 'Mostrar categoría';
   mostrarCategoria.classList.add('mostrar-categoria');
@@ -280,12 +295,17 @@ const filtrarPersonajes = (tipo) => {
   }
 };
 
+// Aquí añado el evento click para el funcionamiento de cada uno de los botones, excepto el boton de filtrar, que tiene un funcionamiento diferente y preferí ubicarlo justo a sus funciones.
+
 document.getElementById('botonHéroe').addEventListener('click', () => filtrarPersonajes('héroe'));
 document.getElementById('botonVillano').addEventListener('click', () => filtrarPersonajes('villano'));
 document.getElementById('botonAntihéroe').addEventListener('click', () => filtrarPersonajes('antihéroe'));
 document.getElementById('botonLugar').addEventListener('click', () => filtrarPersonajes('lugar'));
 document.getElementById('botonArma').addEventListener('click', () => filtrarPersonajes('arma'));
 document.getElementById('botonTodos').addEventListener('click', () => filtrarPersonajes('todos'));
+
+// En esta parte creo las cajas en las que meter cada personaje y sus diferentes caracteristicas como nombre, poderes, etc. En el caso del apartado alter ego, especifico que si es N/A no se muestre, ya que en este caso el nombre y el alter ego del personaje serían el mismo.
+// El código lo empecé por aquí, pensé que lo principal es crear todo el contenido antes de añadir funcionalidades de filtrado, pero como dije más arriba, por algun motivo que no consigo averiguar, algunas funciones de los filtros funcionan mejor colocandolas antes de todo.
 
 personajesMarvel.forEach(personaje => {
   const section = document.createElement('section');
@@ -323,6 +343,8 @@ personajesMarvel.forEach(personaje => {
   })
   info.appendChild(poderes);
 
+  // Aquí creo un botón para ampliar la información visible de cada personaje. Para evitar repetir todo el código creando de nuevo la seccion del personaje y todos sus apartados, he recurrido a la funcionalidad de clonar, de ese modo se copia toda la caja del personaje y solo hay que añadirle las nuevas caracteristicas para mostrar.
+
   const seguirLeyendo = document.createElement('button');
   seguirLeyendo.textContent = 'Seguir Leyendo';
   seguirLeyendo.classList.add('seguir-leyendo');
@@ -331,6 +353,8 @@ personajesMarvel.forEach(personaje => {
    seguirLeyendo.addEventListener('click', () => {
     const sectionClonada = section.cloneNode(true);
     sectionClonada.classList.add('section-clonada');
+   
+    // Aquí especifico que una vez que se amplia la información del personaje, debe desaparecer el botón de seguir leyendo, ya que no habría nada más que mostrar y el botón ya no tiene ninguna utilidad.
 
     const button = sectionClonada.querySelector('.seguir-leyendo');
     if (button) {
@@ -358,6 +382,8 @@ const modalSeguirLeyendo = document.createElement('div');
 modalSeguirLeyendo.id = 'modal-seguir-leyendo';
 modalSeguirLeyendo.classList.add('modal-seguir-leyendo');
 
+//Aquí creo el boton para cerrar el div creado previamente al pulsar en seguir leyendo, ya que este div se superpone al resto del contenido y es necesario poder quitarlo para seguir navegando por la web.
+
 const closeButton = document.createElement('span');
 closeButton.classList.add('close');
 closeButton.textContent = 'x';
@@ -373,6 +399,8 @@ modalSeguirLeyendo.appendChild(descripcionDiv);
 
 document.body.appendChild(modalSeguirLeyendo);
 
+//Como indiqué anteriormente, la funcionalidad del botón filtrar del nav lo dejé aparte, ya que es el único que funciona diferente al resto. A continuación creamos su evento click. Que consiste en crear un div que se superpone al resto de la web.
+
 const filtrar = document.getElementById('botonFiltrar');
 
 filtrar.addEventListener('click', () => {
@@ -381,6 +409,8 @@ filtrar.addEventListener('click', () => {
 
   const ventanaFiltrar = document.createElement('div');
   ventanaFiltrar.id = 'ventana-filtrar';
+
+  // Igual que hice con las cajas de los superhéroes, al div de la ventana de filtrado también le añado un boton para cerrarla.
 
   const botonCerrarFiltro = document.createElement('span');
 botonCerrarFiltro.classList = 'close';
@@ -391,6 +421,8 @@ ventanaFiltrar.appendChild(botonCerrarFiltro);
 botonCerrarFiltro.addEventListener('click', () => {
   ventanaFiltrar.remove();
 })
+
+// Aquí creo el contenido que mostrará la ventana de filtrado, un titulo h3 y tambien muestro las diferentes categorias disponibles para buscar y a cada una le añado la casilla para seleccionarla (check).
 
   const tituloVentanaFiltrar = document.createElement('h3');
   tituloVentanaFiltrar.textContent = 'Visualizar por categorías';
@@ -413,6 +445,8 @@ botonCerrarFiltro.addEventListener('click', () => {
     ventanaFiltrar.appendChild(label);
   });
 
+  // Para acabar con la ventana de filtrado, creo un boton buscar y le añado su evento click. A continuación, el click comprobará que categorias (tipo) tienen activado el check y cuales no, para luego mostrar las que lo tienen y ocultar el resto usando display block o display none según convenga. De primeras lo intenté mediante CSS, pero me pareció más complicado y usaba más código.
+
   const botonBuscar = document.createElement('button');
   botonBuscar.textContent = 'Buscar';
   ventanaFiltrar.appendChild(botonBuscar);
@@ -426,7 +460,13 @@ botonCerrarFiltro.addEventListener('click', () => {
       }
     }
 
-    document.querySelectorAll('.personaje').forEach(section => {
+    // Aquí comprobamos si con la selección de filtros elegidos hay resultados o no. Si no los hubiese (Porque solo se seleccione la categoria anihéroes) la función filtrarPersonajes recogeria cero resultados, lo cual lanza la función de mas arriba obtenerPersonajesAleatorios que ya hemos usado para el boton antiheroes del nav.
+    //En el caso de que se seleccionen categorias que si incluyen resultados, le metemos display block para mostrarlos y display none para ocultar el resto.
+
+    if (categoriasSeleccionadas.length === 1) {
+    filtrarPersonajes(categoriasSeleccionadas[0]);
+    } else {
+      document.querySelectorAll('.personaje').forEach(section => {
 
       const tipo = section.classList[1];
 
@@ -437,12 +477,25 @@ botonCerrarFiltro.addEventListener('click', () => {
       }
     });
   
+    // Para evitar que aparezcan resultados aleatorios o la frase de que no hay resultados de forma repetida, nos aseguramos de que con cada busqueda se borren resultados de las busquedas anteriores.
+
+      const aleatorias = document.querySelectorAll('.personaje-aleatoria');
+  aleatorias.forEach(seccion => seccion.remove());
+
+  const noResults = document.querySelector('#no-results-message');
+  if (noResults) noResults.remove();
+}
+
+// Por último, eliminamos la ventana de filtrado cuando ya se ha hecho la busqueda.
+
     ventanaFiltrar.remove()
   });
 
     document.body.appendChild(ventanaFiltrar);
   }
 );
+
+//Finalmente, acabamos con un footer, el cual he preferido dejar bastante simple, ya que al no ser una tienda no es necesario añadir botones de teléfono, atencón al cliente, etc. Y me parece que así rompe menos la estética simpe de la web, en la que no he querido resaltar demasiado header, nav y footer, para que el protagonismo lo tengan los propios personajes del contenido.
 
 const footer = document.querySelector('footer');
 
